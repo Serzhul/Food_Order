@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import CartIcon from "../Cart/CartIcon";
-import classes from "./HeaderCartButton.module.css";
+import classes from "./HeaderCartButton.module.scss";
 import CartContext from "../../store/cart-context";
 
 const HeaderCartButton = (props) => {
@@ -30,7 +30,7 @@ const HeaderCartButton = (props) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [items]);
+  }, [items, cartCtx]);
 
   return (
     <button className={btnClasses} onClick={props.onClick}>
@@ -41,6 +41,6 @@ const HeaderCartButton = (props) => {
       <span className={classes.badge}>{numberOfCartItems}</span>
     </button>
   );
-}; 
+};
 
 export default HeaderCartButton;
