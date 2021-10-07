@@ -3,10 +3,12 @@ import CartContext from "./cart-context";
 
 const CART_ADD = "cart/ADD";
 const CART_REMOVE = "cart/REMOVE";
+const CART_ORDER = "cart/ORDER";
 
 const defaultCartState = {
   items: [],
   totalAmount: 0,
+  isOrdered: false,
 };
 
 const cartReducer = (state, action) => {
@@ -63,6 +65,13 @@ const cartReducer = (state, action) => {
       };
     }
 
+    case CART_ORDER: {
+      return {
+        ...state,
+        isOrdered: !state.isOrdered,
+      };
+    }
+
     default:
       return defaultCartState;
   }
@@ -73,6 +82,7 @@ const CartProvider = (props) => {
     cartReducer,
     defaultCartState
   );
+
   const addItemToCarHandler = (item) => {
     dispatchCartAction({ type: CART_ADD, item });
   };
@@ -81,11 +91,17 @@ const CartProvider = (props) => {
     dispatchCartAction({ type: CART_REMOVE, id });
   };
 
+  const orderItemHandler = () => {
+    dispatchCartAction({ type: CART_ORDER });
+  };
+
   const cartContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
+    isOrdered: cartState.isOrdered,
     addItem: addItemToCarHandler,
     removeItem: removeItemFromCartHandler,
+    orderCartItems: orderItemHandler,
   };
 
   return (
